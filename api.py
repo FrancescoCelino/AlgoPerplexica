@@ -14,11 +14,10 @@ class AVBrainResponse(BaseModel):
 
 @app.post("/enrich", response_model=AVBrainResponse)
 async def enrich_av_brain(request: AVBrainRequest):
-    try: 
-        enriched = main.process_av_brain(request.av_brain_prompt, request.av_brain_context)
-        return AVBrainResponse(enriched_context=enriched)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    queries = main.extract_queries_from_av_brain(request.av_brain_prompt, request.av_brain_context)
+    enriched = main.enrich_context_from_queries(queries, request.av_brain_context)
+    return AVBrainResponse(enriched_context=enriched)
+
     
 @app.get("/health")
 async def health_check():
