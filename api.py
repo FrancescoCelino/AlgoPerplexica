@@ -8,6 +8,8 @@ app = FastAPI(title = "Perplexica Integration API",
 class AVBrainRequest(BaseModel):
     av_brain_prompt: str
     av_brain_context: str
+    # TODO: insert how many queries to generate, default to 2
+    # TODO: insert model provider and name chosen by the user
 
 class AVBrainResponse(BaseModel): 
     enriched_context: str
