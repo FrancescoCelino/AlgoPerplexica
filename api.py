@@ -14,7 +14,8 @@ class AVBrainResponse(BaseModel):
 
 @app.post("/enrich", response_model=AVBrainResponse)
 async def enrich_av_brain(request: AVBrainRequest):
-    queries = main.extract_queries_from_av_brain(request.av_brain_prompt, request.av_brain_context)
+    queries = main.extract_queries_from_av_brain(request.av_brain_prompt, request.av_brain_context, 2)
+    print = f"API generated queries: {queries}"
     enriched = main.enrich_context_from_queries(queries, request.av_brain_context)
     return AVBrainResponse(enriched_context=enriched)
 
